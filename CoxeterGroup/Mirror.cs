@@ -1,4 +1,5 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System;
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace CoxeterGroup
@@ -17,5 +18,10 @@ namespace CoxeterGroup
 			//TODO: add inner product matrix
 			throw new System.NotImplementedException();
 		}
+
+        public Vector<float> Reflect(Vector<float> pointToReflect)
+        {
+            throw new Exception();
+        } 
 	}
 }

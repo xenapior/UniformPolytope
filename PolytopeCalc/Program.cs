@@ -13,6 +13,10 @@ namespace PolytopeCalc
 	{
 		static void Main(string[] args)
 		{
+		    Mirror[] ms = {new Mirror(new float[] {1, 2, 3}), new Mirror(new float[] {0, 1, 0})};
+		    FundamentalRegion reg = new FundamentalRegion(ms);
+
+
 			con.ReadKey();
 		}
 	}

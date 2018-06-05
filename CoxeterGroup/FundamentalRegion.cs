@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Linq;
@@ -11,12 +12,9 @@ namespace CoxeterGroup
 {
 	public sealed class FundamentalRegion
 	{
-		public static float Tolerance = float.Epsilon*100;
-
 		private Mirror[] boundary;
 		private Vector<float> pos;	//Used to identify the region
-
-
+        
 		public FundamentalRegion(Mirror[] mirrors, float[] markerPos=null)
 		{
 			int dim = mirrors[0].Normal.Count;
@@ -34,29 +32,39 @@ namespace CoxeterGroup
 				Debug.Assert(dim == markerPos.Length);
 				pos = new DenseVector(markerPos);
 			}
-		}
+            pos = pos.Normalize(2);
+        }
 
-		/// <summary>
-		/// Reflect this region in all mirrors.
-		/// </summary>
-		/// <returns></returns>
+
 		public FundamentalRegion[] ReflectAll()
 		{
 			FundamentalRegion[] newRegions=new FundamentalRegion[boundary.Length];
 			for (int i = 0; i < boundary.Length; i++)
 			{
-				newRegions[i] = ReflectInMirror(boundary[i]);
+				newRegions[i] = ReflectInMirror(i);
 			}
 
 			return newRegions;
 		}
 
-		private FundamentalRegion ReflectInMirror(Mirror mirror)
+	    public Vector<float>[] ReflectPositions()
+	    {
+	        Vector<float>[] newPos = new Vector<float>[boundary.Length];
+            for (int i = 0; i < boundary.Length; i++)
+            {
+                newPos[i] = boundary[i].Reflect(pos);
+            }
+
+            return newPos;
+	    }
+
+	    public FundamentalRegion ReflectInMirror(int mirrorId)
 		{
 			Mirror[] newBoundary = new Mirror[boundary.Length];
+	        Mirror m = boundary[mirrorId];
 			for (int i = 0; i < boundary.Length; i++)
 			{
-				newBoundary[i] = mirror.Reflect(boundary[i]);
+				newBoundary[i] = m.Reflect(boundary[i]);
 			}
 			return new FundamentalRegion(newBoundary);
 		}

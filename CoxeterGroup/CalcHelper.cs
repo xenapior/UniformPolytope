@@ -10,28 +10,34 @@ namespace CoxeterGroup
 {
 	public static class CalcHelper
 	{
-		public static int Dimension;	// which dimension to calculate
-		public static Matrix<float> IPMatrix;	// inner product matrix
+		public static int Dimension;	// Affin space dim to calculate. Euclidean is calculated with +1 dim.
+		public static Matrix<float> MP;	// inner product matrix
 
 		static CalcHelper()
 		{
 			Dimension = 3;
-			SetAsEuclidean();
+			SetAsSpherical();
 		}
 
 		public static void SetAsEuclidean()
 		{
-			IPMatrix = Matrix.Build.DenseIdentity(Dimension);
-			IPMatrix[Dimension - 1, Dimension - 1] = 0;
+			MP = Matrix.Build.DenseIdentity(Dimension);
+			MP[Dimension - 1, Dimension - 1] = 0;
 		}
 		public static void SetAsSpherical()
 		{
-			IPMatrix = Matrix.Build.DenseIdentity(Dimension);
+			MP = Matrix.Build.DenseIdentity(Dimension);
 		}
 		public static void SetAsHyperbolical()
 		{
-			IPMatrix = Matrix.Build.DenseIdentity(Dimension);
-			IPMatrix[Dimension - 1, Dimension - 1] = -1;
+			MP = Matrix.Build.DenseIdentity(Dimension);
+			MP[Dimension - 1, Dimension - 1] = -1;
 		}
+
+	    public static float InnerProduct(Vector<float> v1, Vector<float> v2)
+	    {
+	        var res = v1.ToRowMatrix()*MP*v2.ToColumnMatrix();
+	        return res[0, 0];
+	    }
 	}
 }
