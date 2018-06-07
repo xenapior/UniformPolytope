@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalcHelper.cs" />
+    <Compile Include="Space.cs" />
     <Compile Include="FundamentalRegion.cs" />
     <Compile Include="Mirror.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

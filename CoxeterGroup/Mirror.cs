@@ -4,24 +4,30 @@ using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace CoxeterGroup
 {
-	public sealed class Mirror
-	{
-		public Vector Normal;
+    public sealed class Mirror
+    {
+        internal Vector Normal;
 
-		public Mirror(float[] normal)
-		{
-			Normal = new DenseVector(normal);
-		}
+        public float[] NormalArray
+        {
+            get { return Normal.ToArray(); }
+            set { Normal = new DenseVector(value); }
+        }
 
-		public Mirror Reflect(Mirror tobeReflected)
-		{
-			//TODO: add inner product matrix
-			throw new System.NotImplementedException();
-		}
+        public Mirror(float[] normal)
+        {
+            Normal = new DenseVector(normal);
+        }
 
-        public Vector<float> Reflect(Vector<float> pointToReflect)
+        public Mirror Reflect(Mirror tobeReflected)
+        {
+            var T=Space.I
+        }
+
+        internal Vector<float> ReflectPos(Vector<float> pointToReflect)
         {
             throw new Exception();
-        } 
-	}
+        }
+
+    }
 }
